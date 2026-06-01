@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import Link from "next/link";
 
 import { createClient } from "@/lib/supabase/client";
-
 import RatingStars from "@/components/reviews/RatingStars";
 
 interface Review {
@@ -13,12 +11,12 @@ interface Review {
   customer_name: string;
   rating: number;
   comment: string;
-  admin_reply?: string;
+  admin_reply?: string | null;
 
   services?: {
     id: string;
     name: string;
-  };
+  }[];
 }
 
 interface Service {
@@ -35,12 +33,6 @@ export default function Testimonials() {
   const [services, setServices] =
     useState<Service[]>([]);
 
-  /*
-    =========================
-    LOAD DATA
-    =========================
-  */
-
   useEffect(() => {
     async function loadData() {
       /*
@@ -49,6 +41,7 @@ export default function Testimonials() {
 
       const {
         data: reviewsData,
+        error: reviewsError,
       } = await supabase
         .from("reviews")
         .select(`
@@ -68,12 +61,20 @@ export default function Testimonials() {
         })
         .limit(6);
 
+      if (reviewsError) {
+        console.error(
+          "Reviews Error:",
+          reviewsError
+        );
+      }
+
       /*
         SERVICES
       */
 
       const {
         data: servicesData,
+        error: servicesError,
       } = await supabase
         .from("services")
         .select(`
@@ -82,7 +83,17 @@ export default function Testimonials() {
         `)
         .order("name");
 
-      setReviews(reviewsData || []);
+      if (servicesError) {
+        console.error(
+          "Services Error:",
+          servicesError
+        );
+      }
+
+      setReviews(
+        (reviewsData as Review[]) ||
+          []
+      );
 
       setServices(
         servicesData || []
@@ -100,18 +111,13 @@ export default function Testimonials() {
         style={{
           backgroundImage:
             "url('/water-drop.jpeg')",
-
           backgroundRepeat:
             "no-repeat",
-
           backgroundPosition:
             "center",
-
           backgroundSize:
             "75vw",
-
           opacity: 0.05,
-
           filter:
             "grayscale(100%)",
         }}
@@ -147,7 +153,9 @@ export default function Testimonials() {
                 {/* HEADER */}
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="font-bold text-lg">
-                    {review.customer_name}
+                    {
+                      review.customer_name
+                    }
                   </h3>
 
                   <RatingStars
@@ -175,11 +183,14 @@ export default function Testimonials() {
                     "
                   >
                     <p className="font-bold text-blue-400">
-                      🏢 Response from CM Infinity
+                      🏢 Response from
+                      CM Infinity
                     </p>
 
                     <p className="mt-2 text-zinc-300">
-                      {review.admin_reply}
+                      {
+                        review.admin_reply
+                      }
                     </p>
                   </div>
                 )}
@@ -187,16 +198,16 @@ export default function Testimonials() {
                 {/* SERVICE */}
                 <div className="mt-6 text-sm text-blue-400">
                   Service:{" "}
-                  {
-                    review.services
-                      ?.name
-                  }
+                  {review.services?.[0]
+                    ?.name ||
+                    "General Service"}
                 </div>
               </div>
             ))
           ) : (
             <div className="col-span-full text-center text-zinc-400">
-              No reviews available yet.
+              No reviews available
+              yet.
             </div>
           )}
         </div>
