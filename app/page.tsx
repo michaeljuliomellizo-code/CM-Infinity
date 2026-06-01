@@ -1,4 +1,5 @@
-'use client'
+
+"use client";
 import Hero from '@/components/Hero'
 import Services from '@/components/Services'
 import EstimateForm from '@/components/EstimateForm'
@@ -8,6 +9,7 @@ import Reel from '@/components/Reel'
 import Reel2 from '@/components/Reel2'
 import { useState } from 'react'
 import Map from '@/components/Map';
+
 
 
 export default function Home() {
@@ -37,7 +39,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <Map />
         </div>
-        
+      
       <Testimonials />
 
       <Footer />

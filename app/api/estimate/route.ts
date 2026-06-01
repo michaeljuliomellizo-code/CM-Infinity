@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
       from: 'onboarding@resend.dev',
 
-      to: 'michael.julio.mellizo@gmail.com',
+      to: 'cminfinitysolutionsllc@gmail.com',
 
       subject: 'New Estimate Request',
 

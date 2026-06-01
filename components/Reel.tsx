@@ -24,6 +24,12 @@ const images = [
   "/reels/naturaleza/Fence20.jpeg",
   "/reels/naturaleza/Fence21.jpeg",
   "/reels/naturaleza/Fence22.jpeg",
+  "/reels/naturaleza/Image1.jpeg",
+  "/reels/naturaleza/Image3.jpeg",
+  "/reels/naturaleza/Image4.jpeg",
+  "/reels/naturaleza/Image5.jpeg",
+  "/reels/naturaleza/Image6.jpeg",
+  "/reels/naturaleza/Image7.jpeg",
 ];
 
 export default function Reel() {

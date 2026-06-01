@@ -1,8 +1,8 @@
-export default function Footer() {
+import Link from "next/link";
 
+export default function Footer() {
   return (
     <footer className="bg-black text-white py-20 text-center">
-
       <h3 className="text-4xl font-bold">
         CM Infinity Solutions LLC
       </h3>
@@ -19,6 +19,20 @@ export default function Footer() {
         Serving South Carolina & Charlotte
       </p>
 
+      {/* ADMIN */}
+      <div className="mt-12">
+        <Link
+          href="/admin/reviews"
+          className="
+            text-xs
+            text-zinc-600
+            hover:text-zinc-300
+            transition
+          "
+        >
+          Admin Access
+        </Link>
+      </div>
     </footer>
-  )
+  );
 }
